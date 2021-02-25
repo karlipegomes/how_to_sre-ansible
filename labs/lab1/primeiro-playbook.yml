@@ -1,0 +1,26 @@
+---
+- name: Instalar e configurar servidor web
+  hosts: linux
+  tasks:
+  - name: instalar o apache
+    yum:
+      name: httpd
+      state: present
+  
+  - name: iniciando o apache
+    service:
+      name: httpd
+      enabled: true
+      state: started 
+
+  - name: copiando index
+    copy:
+      src: index2.html
+      dest: /var/www/html/
+
+  - name: liberando porta 80
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+      immediate: yes
