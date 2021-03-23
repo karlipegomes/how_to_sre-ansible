@@ -1,0 +1,30 @@
+---
+- name: Adicionando usuário
+  hosts: all
+  tasks:
+    - name: Criando usuário ansible
+      user:
+        name: ansible
+        uid: 2000
+
+    - name: Adicionando usuário ansible no sudoers
+      copy:
+        content: "ansible  ALL=(ALL)  NOPASSWD: ALL"
+        dest: /etc/sudoers.d/ansible
+
+    - name: Set authorized key taken from file
+      authorized_key:
+          user: ansible
+          state: present
+          key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+
+    - name: Retirar permissão de root fazer login
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#PermitRootLogin'
+        line: 'PermitRootLogin No'
+
+    - name: Restart service sshd
+      service:
+        name: sshd
+        state: restarted

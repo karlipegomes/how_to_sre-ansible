@@ -1,0 +1,26 @@
+---
+- name: Montar um servidor WEB
+  hosts: host1.example.com
+  tasks:
+    - name: Instalar o pacote httpd
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Habilitando serviço httpd
+      service:
+        name: httpd
+        state: restarted
+        enabled: true
+
+    - name: Liberando serviço http
+      firewalld:
+        permanent: true
+        state: enabled
+        service: http
+        immediate: yes
+
+    - name: Copiando conteudo para index.html
+      copy:
+        content: "CringerLabs Ansible 01 !!"
+        dest: "/var/www/html/index.html"

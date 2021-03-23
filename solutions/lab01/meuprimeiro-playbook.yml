@@ -1,0 +1,8 @@
+---
+- name: Alterando arquivo
+  hosts: linux
+  tasks:
+    - name: Alterar arquivo /etc/motd
+      copy:
+        content: "Bem Vindo"
+        dest: /etc/motd

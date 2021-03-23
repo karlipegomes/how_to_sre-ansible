@@ -1,9 +1,0 @@
----
-- name: alterando conteudo do portal
-  hosts: linux
-  tasks:
-  - name: alterar index.html
-    lineinfile:
-      path: /var/www/html/index.html
-      line: 'vou ja f1'
-      state: present
