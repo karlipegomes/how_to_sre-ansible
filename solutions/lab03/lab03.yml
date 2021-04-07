@@ -1,0 +1,56 @@
+---
+- name: Lab 03
+  hosts: all
+  vars:
+    commom_pkg:
+      - tcpdump
+      - net-tools
+      - bind-utils
+      - vim
+      - git
+      - open-vm-tools
+      - htop
+      - screen
+  tasks:
+    - name: Definir hostname igual a inventário
+      hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Instalando repositorio do EPEL
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Instalar pacotes bases
+      yum:
+        name: "{{ commom_pkg }}"
+        state: present
+      notify: restart vmtoolsd
+
+    - name: Atualizar servidor
+      yum:
+        name: "*"
+        state: latest
+
+    - name: copiar motd personalizado
+      copy:
+        src: motd
+        dest: /etc/motd
+
+    - name: personalizar bash
+      blockinfile:
+        path: /etc/bashrc
+        block: |
+          # Personalizados ambiente CringerLabs
+          # # ALIASES
+          alias ls="ls -l --color"
+          #
+          # # Interface UserView
+          PS1='[\[\e[01;36m\]\u\[\e[01;37m\]@\[\e[01;32m\]\h\[\e[01;33m\]\W\[\e[00;37m\]]$\[\033[0;37m\]'
+
+  handlers:
+    - name: restart vmtoolsd
+      service:
+        name: vmtoolsd
+        state: restarted
+        enabled: true

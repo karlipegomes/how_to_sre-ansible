@@ -1,0 +1,50 @@
+---
+- name: Lab 02
+  hosts: host2.example.com
+  vars:
+    db_packages:
+      - mariadb-server
+      - MySQL-python
+  tasks:
+    - name: Instalando pacotes {{ db_packages }}
+      yum:
+        name: "{{ db_packages }}"
+        state: latest
+      notify: 
+        - restart db service
+      changed_when: true
+
+    - name: Liberar porta do serviço
+      firewalld:
+        port: 3306/tcp
+        permanent: yes
+        immediate: yes
+        state: enabled
+    
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: criando database store
+      mysql_db:
+        name: store
+        state: present
+
+    - name: copiando dump store.sql
+      copy:
+        src: store.sql
+        dest: /tmp/
+  
+    - name: importando dump store.sql
+      mysql_db:
+        name: store
+        state: import
+        target: /tmp/store.sql
+
+  handlers:
+    - name: restart db service
+      service:
+        name: mariadb
+        state: restarted
+        enabled: true
+
+
