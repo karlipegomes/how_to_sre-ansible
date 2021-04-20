@@ -1,0 +1,7 @@
+[webserver]
+role = webserver
+
+[general]
+port = 80
+package = nginx
+

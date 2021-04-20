@@ -1,0 +1,29 @@
+---
+- name: LAB 04
+  hosts: host1.example.com
+  vars:
+    facts_directory: /etc/ansible/facts.d
+  tasks:
+
+    - name: Criando diretorio {{ facts_directory }}
+      file:
+        path: "{{ facts_directory }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copiando facts para o host
+      copy:
+        src: cringerlabs.fact
+        dest: "{{ facts_directory }}"
+[root@control-node labs]# cat lab04/lab04_2.yml 
+---
+- name: Consumindo facts
+  hosts: host1.example.com
+  tasks:
+    - name: Printando informações customizadas
+      debug:
+        msg: >
+          A função do servidor host1 é {{ ansible_facts.ansible_local.cringerlabs.webserver.role  }},
+          o pacote que instala o serviço principal é o {{ ansible_facts.ansible_local.cringerlabs.general.package }},
+          que é executado na porta {{ ansible_facts.ansible_local.cringerlabs.general.port }}/tcp."
+
