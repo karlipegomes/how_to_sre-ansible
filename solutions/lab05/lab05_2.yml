@@ -1,0 +1,17 @@
+---
+- name: LAB 05 - parte 2
+  hosts: host1.example.com
+  tasks:
+      - name: Instale o package criado no Fact
+        yum:
+          name: "{{ ansible_facts.ansible_local.cringerlabs.general.package }}"
+          state: present
+        register: package_version
+
+      - debug: var=package_version
+
+      - name: Criando arquivo index.html
+        copy:
+          content: "{{ variavel }}"
+          dest: /usr/share/nginx/html/index.html
+

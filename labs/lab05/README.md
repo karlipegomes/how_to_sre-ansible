@@ -1,0 +1,16 @@
+# LAB05
+- Criar Playbook direcionado ao host1.
+  - Desinstalar o package httpd
+  - Exiba o MacAddress com a seguinte frase
+    - “O MacAddress do servidor host1 é 'fact_contendo_macaddress'.”
+  - Instale o package criado no Fact
+  - Libere o serviço criado no Fact
+  - Inicie o serviço criado no Fact
+    - Use handlers
+    - Force a inicialização do handler imediatamente
+  - Check a versão do nginx instalado
+  - Exiba a versão no nginx
+  - Crie um arquivo de variável para o host1 utilizando o Vault 
+      - Variavel: “CringerLabs SECRETS!!!”
+      - Utilize o valor dessa variável como conteúdo para o arquivo index.html com destino “/usr/share/nginx/html/”
+      - Check se o arquivo foi substituido

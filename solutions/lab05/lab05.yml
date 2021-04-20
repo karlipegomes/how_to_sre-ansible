@@ -1,0 +1,38 @@
+---
+- name: LAB 05
+  hosts: host1.example.com
+  tasks:
+    - name: Desinstalar o package httpd
+      yum:
+        name: httpd
+        state: absent
+
+    - name: Exiba o MacAddress
+      debug:
+        msg: >
+          O MacAddress do servidor host1 é {{ ansible_facts.default_ipv4.macaddress }}.
+
+    - name: Instale o package criado no Fact
+      yum:
+        name: "{{ ansible_facts.ansible_local.cringerlabs.general.package }}"
+        state: present
+      notify:
+        - restart nginx
+
+    - name: Libere o serviço criado no Fact
+      firewalld:
+        port: "{{ ansible_facts.ansible_local.cringerlabs.general.port }}/tcp"
+        immediate: true
+        permanent: yes
+        state: enabled
+
+    - name: Forçando inicialização do handler
+      meta: flush_handlers
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: "{{ ansible_facts.ansible_local.cringerlabs.general.package }}"
+        state: restarted
+        enabled: true
+
