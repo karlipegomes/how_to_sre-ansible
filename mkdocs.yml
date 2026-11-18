@@ -1,0 +1,10 @@
+site_name: "How To SRE - Ansible"
+site_description: "Open training project for becoming an SRE"
+repo_url: https://github.com/karlipegomes/how_to_sre-ansible
+edit_uri: edit/main/docs/
+
+nav:
+  - "Home": index.md
+
+plugins:
+  - techdocs-core

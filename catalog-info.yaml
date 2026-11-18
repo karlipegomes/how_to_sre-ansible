@@ -8,6 +8,8 @@ metadata:
   description: "Open Training Project Bases to become a SRE"
   annotations:
     github.com/project-slug: karlipegomes/how_to_sre-ansible
+    backstage.io/techdocs-ref: dir:.
+  tags: [ansible, training]
   links:
     - url: https://github.com/karlipegomes/how_to_sre-ansible
       title: Repository
@@ -24,6 +26,8 @@ metadata:
   description: "Open Training Project Bases to become a SRE"
   annotations:
     github.com/project-slug: karlipegomes/how_to_sre-ansible
+    backstage.io/techdocs-ref: dir:.
+  tags: [ansible]
 spec:
   type: infrastructure
   lifecycle: deprecated
