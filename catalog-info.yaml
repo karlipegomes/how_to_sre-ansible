@@ -1,0 +1,31 @@
+# Backstage catalog: Domain (GitHub org) -> System (this repo) -> Component(s).
+# Names aligned with Dependency-Track (StaffOps/homelab-gitops helm-charts/argo-events/image-scan/catalog.yaml).
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: how_to_sre-ansible
+  title: how_to_sre-ansible
+  description: "Open Training Project Bases to become a SRE"
+  annotations:
+    github.com/project-slug: karlipegomes/how_to_sre-ansible
+  links:
+    - url: https://github.com/karlipegomes/how_to_sre-ansible
+      title: Repository
+      icon: github
+spec:
+  owner: user:karlipegomes
+  domain: karlipegomes
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: how_to_sre-ansible
+  title: how_to_sre-ansible
+  description: "Open Training Project Bases to become a SRE"
+  annotations:
+    github.com/project-slug: karlipegomes/how_to_sre-ansible
+spec:
+  type: infrastructure
+  lifecycle: deprecated
+  owner: user:karlipegomes
+  system: how_to_sre-ansible
